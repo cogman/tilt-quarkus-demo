@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tilt-quarkus-demo
+  labels:
+    app: tilt-quarkus-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tilt-quarkus-demo
+  template:
+    metadata:
+      labels:
+        app: tilt-quarkus-demo
+    spec:
+      containers:
+        - name: tilt-quarkus-demo
+          image: "localhost:5000/tilt-quarkus-demo:latest"
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
