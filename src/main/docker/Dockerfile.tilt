@@ -1,0 +1,22 @@
+# syntax=docker/dockerfile:1
+FROM eclipse-temurin:17
+
+WORKDIR /app
+# initial gradle download
+ADD gradle gradle
+ADD gradlew .
+RUN ./gradlew --console=plain --no-daemon
+
+# Project dependency downloads
+ADD gradle.properties .
+ADD settings.gradle.kts .
+ADD build.gradle.kts .
+ADD src/main/kotlin/com/github/cogman/GreetingResource.kt src/main/kotlin/com/github/cogman/GreetingResource.kt
+RUN ./gradlew quarkusGoOffline --console=plain --no-daemon || true
+
+# Build the image
+ADD src/main/kotlin src/main/kotlin
+ADD src/test/kotlin src/test/kotlin
+ADD src/main/resources src/main/resources
+ADD src/test/resources src/test/resources
+RUN ./gradlew testClasses --console=plain --no-daemon
