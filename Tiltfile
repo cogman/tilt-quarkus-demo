@@ -13,7 +13,8 @@ k8s_yaml(yaml)
 k8s_resource('tilt-quarkus-demo', 
   port_forwards=['5005:5005', '8080:8080'], 
   links=[
-    link('http://localhost:8080/q/dev-ui', 'Dev UI')
+    link('http://localhost:8080/q/dev-ui', 'Dev UI'),
+    link('http://localhost:8080/q/swagger-ui', 'Swagger'),
   ]
 )
 
