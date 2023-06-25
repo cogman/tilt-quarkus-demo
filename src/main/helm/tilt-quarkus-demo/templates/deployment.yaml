@@ -23,9 +23,15 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /
+              path: /q/health/live
               port: http
           readinessProbe:
             httpGet:
-              path: /
+              path: /q/health/ready
               port: http
+          startupProbe:
+            httpGet:
+              path: /q/health/started
+              port: http
+            periodSeconds: 1
+            failureThreshold: 500
