@@ -1,0 +1,11 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: integration-test
+spec:
+  template:
+    spec:
+      containers:
+        - name: integration-test
+          image: "localhost:5000/tilt-quarkus-test:latest"
+      restartPolicy: Never

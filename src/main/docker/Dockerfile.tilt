@@ -19,4 +19,4 @@ ADD src/main/kotlin src/main/kotlin
 ADD src/test/kotlin src/test/kotlin
 ADD src/main/resources src/main/resources
 ADD src/test/resources src/test/resources
-RUN ./gradlew testClasses --console=plain --no-daemon
+RUN ./gradlew build -x test --console=plain --no-daemon

@@ -15,6 +15,18 @@ k8s_resource('tilt-quarkus-demo',
   links=[
     link('http://localhost:8080/q/dev-ui', 'Dev UI'),
     link('http://localhost:8080/q/swagger-ui', 'Swagger'),
-  ]
+  ],
+  labels=['demo']
 )
 
+docker_build(
+          'localhost:5000/tilt-quarkus-test',
+            '.',
+              dockerfile='./src/main/docker/Dockerfile.tilt',
+              entrypoint = './gradlew --no-daemon -Dquarkus.http.test-host=tilt-quarkus-demo-srv -Dquarkus.http.test-port=80 quarkusIntTest')
+
+k8s_yaml('src/main/kubernetes/testJob.yaml')
+k8s_resource('integration-test',
+  resource_deps=['tilt-quarkus-demo'],
+  trigger_mode=TRIGGER_MODE_MANUAL,
+  labels=['test'])

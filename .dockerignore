@@ -2,3 +2,6 @@ build/
 .gradle/
 .idea/
 .quarkus/
+
+src/main/helm
+src/main/kubernetes
