@@ -33,7 +33,7 @@ docker_build(
           'localhost:5000/tilt-quarkus-test',
             '.',
               dockerfile='./src/main/docker/Dockerfile.tilt',
-              entrypoint = './gradlew --no-daemon -Dquarkus.http.test-host=tilt-quarkus-demo-srv -Dquarkus.http.test-port=80 quarkusIntTest -i')
+              entrypoint = './gradlew --no-daemon -Dquarkus.http.test-host=tilt-quarkus-demo-srv -Dquarkus.http.test-port=80 quarkusIntTest')
 
 k8s_yaml('src/main/kubernetes/testJob.yaml')
 k8s_resource('integration-test',
