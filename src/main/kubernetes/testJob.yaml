@@ -9,3 +9,4 @@ spec:
         - name: integration-test
           image: "localhost:5000/tilt-quarkus-test:latest"
       restartPolicy: Never
+  backoffLimit: 0

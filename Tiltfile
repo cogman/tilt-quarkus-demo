@@ -1,5 +1,14 @@
 # -*- mode: Python -*-
 load('ext://helm_resource', 'helm_resource', 'helm_repo')
+load('ext://helm_remote', 'helm_remote')
+
+dbPassword = 'burnt-toast-1234'
+
+helm_remote(
+  'postgresql',
+  repo_url='https://charts.bitnami.com/bitnami',
+  set=["auth.database=tilt","auth.postgresPassword=" + dbPassword]
+)
 
 docker_build(
           'localhost:5000/tilt-quarkus-demo',
@@ -16,7 +25,8 @@ k8s_resource('tilt-quarkus-demo',
     link('http://localhost:8080/q/dev-ui', 'Dev UI'),
     link('http://localhost:8080/q/swagger-ui', 'Swagger'),
   ],
-  labels=['demo']
+  labels=['demo'],
+  resource_deps=['postgresql']
 )
 
 docker_build(
